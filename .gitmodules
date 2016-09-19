@@ -4,9 +4,6 @@
 [submodule "riscv-opcodes"]
 	path = riscv-opcodes
 	url = https://github.com/riscv/riscv-opcodes.git
-[submodule "riscv-tests"]
-	path = riscv-tests
-	url = https://github.com/lowrisc/riscv-tests.git
 [submodule "riscv-gnu-toolchain"]
 	path = riscv-gnu-toolchain
 	url = https://github.com/lowrisc/riscv-gnu-toolchain.git
@@ -16,3 +13,6 @@
 [submodule "riscv-pk"]
 	path = riscv-pk
 	url = https://github.com/lowrisc/riscv-pk.git
+[submodule "riscv-tests"]
+	path = riscv-tests
+	url = https://github.com/riscv/riscv-tests.git
