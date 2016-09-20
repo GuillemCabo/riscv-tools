@@ -75,7 +75,7 @@ asm_tests_out = $(foreach test, $(asm_p_tests) $(asm_pt_tests) $(asm_v_tests), $
 bmarks_out = $(foreach test, $(bmarks_tests), $(output_dir)/$(test).out)
 
 $(output_dir)/%.out: $(output_dir)/%.riscv
-	spike $< -l $@ 
+	spike $< 2>&1 | spike-dasm > $@ &&  [ $$PIPESTATUS -eq 0 ]
 
 .PRECIOUS: $(output_dir)/%.out
 
