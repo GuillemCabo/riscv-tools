@@ -5,8 +5,11 @@
 #--------------------------------------------------------------------
 
 base_dir = $(abspath ..)
-sim_dir = $(abspath .)
+sim_dir = .
 output_dir = $(sim_dir)/output
+
+SPIKE_FLAGS = -p1 -m2048 --ic=64:4:64 --dc=64:4:64 --l2=256:8:64 --tt=64:8:64:2:1 --tm0=4:4:16:1
+#SPIKE_FLAGS = -p1 -m2048 --ic=64:4:64 --dc=64:4:64 --l2=256:8:64 --utc=64:8:64:4:1
 
 .PHONY: default
 
@@ -75,7 +78,7 @@ asm_tests_out = $(foreach test, $(asm_p_tests) $(asm_pt_tests) $(asm_v_tests), $
 bmarks_out = $(foreach test, $(bmarks_tests), $(output_dir)/$(test).out)
 
 $(output_dir)/%.out: $(output_dir)/%.riscv
-	spike $< 2>&1 | spike-dasm > $@ &&  [ $$PIPESTATUS -eq 0 ]
+	spike $(SPIKE_FLAGS) $< 2>&1 | spike-dasm > $@ &&  [ $$PIPESTATUS -eq 0 ]
 
 .PRECIOUS: $(output_dir)/%.out
 
