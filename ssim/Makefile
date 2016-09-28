@@ -8,8 +8,8 @@ base_dir = $(abspath ..)
 sim_dir = .
 output_dir = $(sim_dir)/output
 
-SPIKE_FLAGS = -p1 -m2048 --ic=64:4:64 --dc=64:4:64 --l2=256:8:64 --tt=64:8:64:2:1 --tm0=4:4:16:1
-#SPIKE_FLAGS = -p1 -m2048 --ic=64:4:64 --dc=64:4:64 --l2=256:8:64 --utc=64:8:64:4:1
+SPIKE_FLAGS = -p1 -m2048 -t2 --ic=64:4:64 --dc=64:4:64 --l2=256:8:64 --tt=64:8:64:1 --tm0=4:4:16:1
+#SPIKE_FLAGS = -p1 -m2048 -t4 --ic=64:4:64 --dc=64:4:64 --l2=256:8:64 --utc=64:8:64:1
 
 .PHONY: default
 
