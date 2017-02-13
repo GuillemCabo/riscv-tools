@@ -3,7 +3,7 @@
 	url = https://github.com/lowrisc/riscv-isa-sim.git
 [submodule "riscv-opcodes"]
 	path = riscv-opcodes
-	url = https://github.com/riscv/riscv-opcodes.git
+	url = https://github.com/lowrisc/riscv-opcodes.git
 [submodule "riscv-gnu-toolchain"]
 	path = riscv-gnu-toolchain
 	url = https://github.com/lowrisc/riscv-gnu-toolchain.git
