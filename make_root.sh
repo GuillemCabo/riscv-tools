@@ -4,12 +4,12 @@
 # BUSYBOX=path/to/busybox LINUX=path/to/linux LOWRISC=path/to/lowrisc make_root.sh
 
 if [ -z "$BUSYBOX" ]; then BUSYBOX=$TOP/riscv-tools/busybox-1.21.1; fi
-BUSYBOX_CFG=$TOP/riscv-tools/busybox_config
+BUSYBOX_CFG=$TOP/riscv-tools/busybox_config.fpga
 
 ROOT_INITTAB=$TOP/riscv-tools/inittab
 
 if [ -z "$LINUX" ]; then LINUX=$TOP/riscv-tools/linux-4.6.2; fi
-LINUX_CFG=$TOP/riscv-tools/vmlinux_config
+LINUX_CFG=$TOP/riscv-tools/vmlinux_config.fpga
 
 # use nexys4 dev_map.h by default
 if [ -z "$FPGA_BOARD" ]; then LOWRISC=$TOP/fpga/board/nexys4_ddr
