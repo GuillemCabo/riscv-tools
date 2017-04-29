@@ -24,6 +24,11 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     cp "$BUSYBOX"/busybox bin/ &&
     ln -s bin/busybox ./init &&
     cp $ROOT_INITTAB etc/inittab &&
+    printf "#!/bin/sh\necho 0 > /proc/sys/kernel/randomize_va_space\n" > disable_aslr.sh &&
+    chmod +x disable_aslr.sh &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../hello_tagctrl.c -o hello &&
+    riscv64-unknown-linux-gnu-gcc -O2 -static ../stack_vuln.c -o stack_vuln &&
+    riscv64-unknown-linux-gnu-gcc -O2 -static ../stack_tagged.c -o stack_tagged &&
     echo "\
         mknod dev/null c 1 3 && \
         mknod dev/tty c 5 0 && \
