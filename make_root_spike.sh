@@ -29,6 +29,8 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     riscv64-unknown-linux-gnu-gcc -O1 -static ../hello_tagctrl.c -o hello &&
     riscv64-unknown-linux-gnu-gcc -O2 -static ../stack_vuln.c -o stack_vuln &&
     riscv64-unknown-linux-gnu-gcc -O2 -static ../stack_tagged.c -o stack_tagged &&
+    riscv64-unknown-linux-gnu-gcc -O2 -static ../secret_vuln.c -o secret_vuln &&
+    riscv64-unknown-linux-gnu-gcc -O2 -static ../secret_tagged.c -o secret_tagged &&
     echo "\
         mknod dev/null c 1 3 && \
         mknod dev/tty c 5 0 && \
