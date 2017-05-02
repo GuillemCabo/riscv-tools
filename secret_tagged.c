@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include "riscv-tests/env/encoding.h"
+#include "encoding.h"
 
 #define set_tagged_val(dst, val, tag) \
   asm volatile ( "tagw %0, %1; sd %0, 0(%2); tagw %0, zero;" : : "r" (val), "r" (tag), "r" (dst))

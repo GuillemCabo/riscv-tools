@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-#include "riscv-tests/env/encoding.h"
+#include "encoding.h"
 
 void set_tagged_val(uint64_t *dst, uint64_t val, uint8_t tag) {
   asm volatile ( "tagw %0, %1; sd %0, 0(%2); tagw %0, zero;" : : "r" (val), "r" (tag), "r" (dst));
