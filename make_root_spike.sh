@@ -26,7 +26,28 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     cp $ROOT_INITTAB etc/inittab &&
     printf "#!/bin/sh\necho 0 > /proc/sys/kernel/randomize_va_space\n" > disable_aslr.sh &&
     chmod +x disable_aslr.sh &&
+    cp ../zram_swap.sh . &&
+    cp ../ramdisk_swap.sh . &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../ptr_elf_tagged.c -o ptr_elf_tagged &&
+    ../elf_tagger ptr_elf_tagged ../ptr_elf_tagged_tags ../ptr_elf_tagged_trace &&
+    riscv64-unknown-linux-gnu-objcopy --add-section .tags=../ptr_elf_tagged_tags ptr_elf_tagged &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../ptr_vuln.c -o ptr_vuln &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../stack_elf_tagged.c -o stack_elf_tagged &&
+    ../elf_tagger stack_elf_tagged ../stack_elf_tagged_tags ../stack_elf_tagged_trace &&
+    riscv64-unknown-linux-gnu-objcopy --add-section .tags=../stack_elf_tagged_tags stack_elf_tagged &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../dummy_tag_test.c -o dummy_tag_test &&
+    ../elf_tagger dummy_tag_test ../dummy_tag_test_tags ../dummy_tag_test_trace &&
+    riscv64-unknown-linux-gnu-objcopy --add-section .tags=../dummy_tag_test_tags dummy_tag_test &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../sigtest.c -o sigtest &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../tagctrl.c -o tagctrl &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../memtagger.c -o memtagger &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../cow_test.c -o cow_test &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../memeater.c -o memeater &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../memeater_simple.c -o memeater_simple &&
     riscv64-unknown-linux-gnu-gcc -O1 -static ../hello_tagctrl.c -o hello &&
+    riscv64-unknown-linux-gnu-gcc -O1 -static ../elf_tag_checker.c -o elf_tag_checker &&
+    ../elf_tagger elf_tag_checker ../elf_tag_checker_tags ../elf_tag_checker_trace &&
+    riscv64-unknown-linux-gnu-objcopy --add-section .tags=../elf_tag_checker_tags elf_tag_checker &&
     riscv64-unknown-linux-gnu-gcc -O2 -static ../stack_vuln.c -o stack_vuln &&
     riscv64-unknown-linux-gnu-gcc -O2 -static ../stack_tagged.c -o stack_tagged &&
     riscv64-unknown-linux-gnu-gcc -O2 -static ../secret_vuln.c -o secret_vuln &&
@@ -36,6 +57,9 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
         mknod dev/tty c 5 0 && \
         mknod dev/zero c 1 5 && \
         mknod dev/console c 5 1 && \
+        mknod dev/zram0 b 254 0 && \
+        mknod dev/ram0  b 1 0 && \
+        mknod dev/loop0 b 7 8 && \
         find . | cpio -H newc -o > "$LINUX"/initramfs.cpio\
         " | fakeroot &&
     if [ $? -ne 0 ]; then echo "build busybox failed!"; fi &&
