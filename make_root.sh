@@ -24,7 +24,7 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     make -j$(nproc) -C "$BUSYBOX" 2>&1 1>/dev/null &&
     if [ -d ramfs ]; then rm -fr ramfs; fi &&
     mkdir ramfs && cd ramfs &&
-    mkdir -p bin etc dev lib proc sbin sys tmp usr usr/bin usr/lib usr/sbin &&
+    mkdir -p bin etc dev home lib proc sbin sys tmp usr mnt nfs root usr/bin usr/lib usr/sbin &&
     cp "$BUSYBOX"/busybox bin/ &&
     ln -s bin/busybox ./init &&
     cp $ROOT_INITTAB etc/inittab &&
@@ -33,6 +33,9 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
         mknod dev/tty c 5 0 && \
         mknod dev/zero c 1 5 && \
         mknod dev/console c 5 1 && \
+        mknod dev/mmcblk0 b 179 0 && \
+        mknod dev/mmcblk0p1 b 179 1 && \
+        mknod dev/mmcblk0p2 b 179 2 && \
         find . | cpio -H newc -o > "$LINUX"/initramfs.cpio\
         " | fakeroot &&
     if [ $? -ne 0 ]; then echo "build busybox failed!"; fi &&

@@ -1,4 +1,13 @@
 ::sysinit:/bin/busybox mount -t proc proc /proc
+::sysinit:/bin/busybox mount -t devtmpfs udev /dev
+::sysinit:/bin/busybox mkdir /dev/pts
+::sysinit:/bin/busybox mount -t devpts devpts /dev/pts
 ::sysinit:/bin/busybox mount -t tmpfs tmpfs /tmp
+::sysinit:/bin/busybox ifconfig eth0 192.168.0.51 up
+::sysinit:/bin/busybox rdate -s 192.168.0.53
+::sysinit:/bin/busybox mount -t nfs -o nolock 192.168.0.53:/home/debian /nfs
+::sysinit:/bin/busybox mount -t proc proc /nfs/proc
+::sysinit:/bin/busybox mount -t devtmpfs udev /nfs/dev
+::sysinit:/bin/busybox mount -t devpts devpts /nfs/dev/pts
 ::sysinit:/bin/busybox --install -s
 /dev/console::sysinit:-/bin/ash
