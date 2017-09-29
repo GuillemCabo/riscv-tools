@@ -16,3 +16,6 @@
 [submodule "riscv-tests"]
 	path = riscv-tests
 	url = https://github.com/lowrisc/riscv-tests.git
+[submodule "riscv-openocd"]
+	path = riscv-openocd
+	url = https://github.com/lowrisc/riscv-openocd
