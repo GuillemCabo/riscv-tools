@@ -20,7 +20,7 @@ CDIR=$PWD
 
 if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     echo "build busybox..."
-    cp  $BUSYBOX_CFG "$BUSYBOX"/.config &&
+    cp -p $BUSYBOX_CFG "$BUSYBOX"/.config &&
     make -j$(nproc) -C "$BUSYBOX" 2>&1 1>/dev/null &&
     if [ -d ramfs ]; then rm -fr ramfs; fi &&
     mkdir ramfs && cd ramfs &&
@@ -40,7 +40,7 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     if [ $? -ne 0 ]; then echo "build busybox failed!"; fi &&
     \
     echo "build linux..." &&
-    cp $LINUX_CFG "$LINUX"/.config &&
+    cp -p $LINUX_CFG "$LINUX"/.config &&
     make -j$(nproc) -C "$LINUX" ARCH=riscv vmlinux 2>&1 1>/dev/null &&
     if [ $? -ne 0 ]; then echo "build linux failed!"; fi &&
     \
