@@ -6,5 +6,5 @@ cd linux-4.6.2
 git init
 git remote add origin https://github.com/lowrisc/riscv-linux.git
 git fetch
-git checkout -f -t origin/update_eth
+git checkout -f -t origin/nominion
 patch -p1 < sdhci_minion_sd.patch

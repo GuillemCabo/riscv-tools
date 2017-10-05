@@ -59,7 +59,7 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     if [ $? -ne 0 ]; then echo "build linux failed!"; fi &&
     \
     cd "$CDIR"
-    cp $TOP/fpga/bootloader/build/bbl ./boot.bin
+    cp $TOP/fpga/bootloader/build/bbl ./boot.bin_$1
 else
     echo "make sure you have both linux and busybox downloaded."
     echo "usage:  [BUSYBOX=path/to/busybox] [LINUX=path/to/linux] [LOWRISC=path/to/lowrisc] make_root.sh"
