@@ -1,10 +1,11 @@
 #!/bin/busybox ash
+/bin/busybox --install -s
 /bin/busybox echo Running the initial fake init
 /bin/busybox ifconfig eth0 192.168.0.51 up
 /bin/busybox echo Setting the clock ...
 /bin/busybox rdate -s 192.168.0.53
 /bin/busybox echo Mounting the nfs partition ...
-/bin/busybox mount -t nfs -o nolock 192.168.0.53:/mnt/poky-dev /nfs || (echo failed; /bin/busybox -s install; /bin/ash)
+/bin/busybox mount -t nfs -o nolock 192.168.0.53:/mnt/poky-dev2 /nfs || (echo failed; /bin/ash)
 
 # Mount the /proc and /sys filesystems.
 /bin/busybox mount -t proc none /nfs/proc

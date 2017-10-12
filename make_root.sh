@@ -26,7 +26,7 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     mkdir -p bin etc dev home lib proc sbin sys tmp usr mnt nfs root usr/bin usr/lib usr/sbin &&
 #    cp "$BUSYBOX"/busybox bin/ &&
 #    ln -s bin/busybox ./init &&
-#    cp $ROOT_INITTAB etc/inittab &&
+    cp $ROOT_INITTAB etc/inittab &&
     cp "$BUSYBOX"/busybox bin/ &&
     cp $TOP/riscv-tools/initial_$1 init &&
     chmod +x init &&

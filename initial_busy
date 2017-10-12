@@ -1,0 +1,15 @@
+#!/bin/busybox ash
+/bin/busybox --install -s
+/bin/busybox ifconfig eth0 192.168.0.51 up
+/bin/busybox echo Setting the clock ...
+/bin/busybox rdate -s 192.168.0.53
+# Mount the /proc and /sys filesystems.
+/bin/busybox mount -t proc none /proc
+/bin/busybox mount -t sysfs none /sys
+/bin/busybox mount -t devtmpfs udev /dev
+/bin/busybox mkdir -p /dev/pts
+/bin/busybox mount -t devpts devpts /dev/pts
+/bin/busybox mount -t tmpfs tmpfs /tmp
+# Boot the real thing.
+/bin/busybox echo Maintenance shell
+exec /bin/busybox ash
