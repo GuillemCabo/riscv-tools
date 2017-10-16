@@ -4,7 +4,6 @@
 # BUSYBOX=path/to/busybox LINUX=path/to/linux LOWRISC=path/to/lowrisc make_root.sh
 
 if [ -z "$BUSYBOX" ]; then BUSYBOX=$TOP/riscv-tools/busybox-1.21.1; fi
-BUSYBOX_CFG=$TOP/riscv-tools/busybox_config.fpga
 
 ROOT_INITTAB=$TOP/riscv-tools/inittab
 
@@ -14,12 +13,10 @@ LINUX=$TOP/riscv-tools/linux-4.6.2
 if [ -z "$FPGA_BOARD" ]; then LOWRISC=$TOP/fpga/board/nexys4_ddr
 else LOWRISC=$TOP/fpga/board/$FPGA_BOARD; fi
 
-
 CDIR=$PWD
 
 if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     echo "build busybox..."
-    cp -p $BUSYBOX_CFG "$BUSYBOX"/.config &&
     make -j$(nproc) -C "$BUSYBOX" 2>&1 1>/dev/null &&
     if [ -d ramfs ]; then rm -fr ramfs; fi &&
     mkdir ramfs && cd ramfs &&
@@ -41,8 +38,8 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
         find . | cpio -H newc -o > "$LINUX"/initramfs.cpio\
         " | fakeroot &&
     if [ $? -ne 0 ]; then echo "build busybox failed!"; fi &&
-    \
-    make -j$(nproc) -C "$LINUX" ARCH=riscv vmlinux &&
+    cd .. && rm -rf ramfs &&
+    make -j$(nproc) -C "$LINUX" ARCH=riscv _all &&
     if [ $? -ne 0 ]; then echo "build linux failed!"; fi &&
     \
     echo "build bbl..." &&

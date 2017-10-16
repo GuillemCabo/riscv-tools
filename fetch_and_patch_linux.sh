@@ -8,8 +8,4 @@ git init
 git remote add origin https://github.com/lowrisc/riscv-linux.git
 git fetch
 git checkout -f -t origin/ethernet-v0.5
-cd ..
-echo Backing up previous Busybox directory \(if any\)
-mkdir -p busybox-1.21.1
-mv -f busybox-1.21.1{,-old-`date -Isec`}
-curl -L http://busybox.net/downloads/busybox-1.21.1.tar.bz2 | tar -xj
+make ARCH=riscv defconfig CONFIG_RV_LOWRISC=y
