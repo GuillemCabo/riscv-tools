@@ -6,5 +6,5 @@ cd linux-4.6.2
 git init
 git remote add origin https://github.com/lowrisc/riscv-linux.git
 git fetch
-git checkout -f -t origin/minion-v0.4
-patch -p1 < sdhci_minion_sd.patch
+git checkout -f -t origin/update-ramtest
+patch -p1 < spi_sd_power_hack.patch

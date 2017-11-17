@@ -51,7 +51,6 @@ if [ -d "$BUSYBOX" ] && [ -d "$LINUX" ]; then
     cd $TOP/fpga/bootloader/build &&
     ../configure \
         --host=riscv64-unknown-elf \
-        --with-lowrisc="$LOWRISC" \
         --with-payload="$LINUX"/vmlinux \
         2>&1 1>/dev/null &&
     make -j$(nproc) bbl 2>&1 1>/dev/null &&
