@@ -1,0 +1,24 @@
+#!/bin/busybox ash
+/bin/busybox install -s
+/bin/busybox ifconfig eth0 192.168.0.51 up
+/bin/busybox echo Setting the clock ...
+/bin/busybox rdate -s 192.168.0.53
+/bin/busybox echo Waiting for the sd card ...
+/bin/busybox sleep 10
+/bin/busybox echo Mounting the sd partition ...
+
+/bin/busybox mount -t ext2 /dev/mmcblk0p2 /mnt || /bin/busybox ash
+
+# Mount the /proc and /sys filesystems.
+/bin/busybox mount -t proc none /mnt/proc
+/bin/busybox mount -t sysfs none /mnt/sys
+/bin/busybox mount -t devtmpfs udev /mnt/dev
+/bin/busybox mkdir -p /mnt/dev/pts
+/bin/busybox mount -t devpts devpts /mnt/dev/pts
+/bin/busybox mount -t tmpfs tmpfs /mnt/tmp
+
+# Do your stuff here.
+/bin/busybox echo "Switch to sd root"
+
+# Boot the real thing.
+exec /bin/busybox switch_root /mnt /sbin/init

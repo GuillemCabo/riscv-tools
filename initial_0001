@@ -1,0 +1,22 @@
+#!/bin/busybox ash
+/bin/busybox --install -s;
+/bin/busybox echo Running the initial fake init
+/bin/busybox ifconfig eth0 192.168.0.51 up
+/bin/busybox echo Setting the clock ...
+/bin/busybox rdate -s 192.168.0.53
+/bin/busybox echo Mounting the nfs partition ...
+/bin/busybox mount -t nfs -o nolock 192.168.0.53:/mnt/poky-dev /nfs || (echo NFS failed; /bin/ash)
+
+# Mount the /proc and /sys filesystems.
+/bin/busybox mount -t proc none /nfs/proc || (echo mount -t proc failed; /bin/ash)
+/bin/busybox mount -t sysfs none /nfs/sys
+/bin/busybox mount -t devtmpfs udev /nfs/dev
+/bin/busybox mkdir -p /nfs/dev/pts
+/bin/busybox mount -t devpts devpts /nfs/dev/pts
+/bin/busybox mount -t tmpfs tmpfs /nfs/tmp
+
+# Do your stuff here.
+/bin/busybox echo "Switch to nfs root"
+
+# Boot the real thing.
+exec /bin/busybox switch_root /nfs /sbin/init
