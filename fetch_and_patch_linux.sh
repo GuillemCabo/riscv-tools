@@ -7,5 +7,5 @@ cd linux-4.6.2
 git init
 git remote add origin https://github.com/lowrisc/riscv-linux.git
 git fetch
-git checkout -f -t origin/ethernet-forencich
+git checkout -f -t origin/legacy1
 make ARCH=riscv defconfig CONFIG_RV_LOWRISC=y
