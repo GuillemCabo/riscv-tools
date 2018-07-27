@@ -26,6 +26,7 @@ Ubuntu packages needed:
 
 
 _Note:_ This requires a compiler with C++11 support (e.g. GCC >= 4.8).
+_Note:_ Has gcc version 8.1.1 has been reported un compatible. Verify that your links to gcc and g++ point to a prior version.
 To use a compiler different than the default, use:
 
 	$ CC=gcc-5 CXX=g++-5 ./build.sh
